@@ -16,8 +16,28 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue')
+    },
+    {
+      path: '/auth/login',
+      name: 'login',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/auth/LoginView.vue')
+    },
+    {
+      path: '/auth/register',
+      name: 'register',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/auth/RegisterView.vue')
     }
   ]
 })
-
+// //{
+//   name: 'Side Login',
+//   path: '/auth/login',
+//   component: () => import('@/views/authentication/SideLogin.vue')
+// }
 export default router
