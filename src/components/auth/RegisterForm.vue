@@ -1,61 +1,91 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-//import Logo from '@/layouts/full/logo/Logo.vue';
-/*Social icons*/
-import google from '@/assets/images/svgs/google-icon.svg';
-import facebook from '@/assets/images/svgs/icon-facebook.svg';
+import { stepUserRegister } from '@/stores/step_register/step_user';
+import type { IActivity } from '@/utils/interface/user/IActivity';
+import type { IUser, IUserRequest } from '@/utils/interface/user/IUser';
+import { useAxiosRequest } from '@/utils/service/custom';
+import { Parent } from '@/utils/service/proxy';
+import { ref, watchEffect } from 'vue';
 
-const checkbox = ref(false);
+const storeUser = stepUserRegister();
+const activity = ref("");
+const user = ref<IUserRequest>({
+    username: '',
+    email: '',
+    password: ''
+})
 const valid = ref(true);
 const show1 = ref(false);
-const password = ref('');
-const email = ref('');
+const userNameRule = ref([
+    (v: string) => !!v || 'Username is required',
+    (v: string) => (v && v.length <= 25 && v.length > 2) || 'Username must be less than 25 characters'
+]);
 const passwordRules = ref([
     (v: string) => !!v || 'Password is required',
-    (v: string) => (v && v.length <= 10) || 'Password must be less than 10 characters'
+    (v: string) => (v && v.length <= 100 && v.length > 3) || 'Password must be less than 100 characters'
 ]);
 const emailRules = ref([(v: string) => !!v || 'E-mail is required', (v: string) => /.+@.+\..+/.test(v) || 'E-mail must be valid']);
-const fname = ref('');
+
+// fusername.value = `${ffamilyname.value}${flastname.value}`
 const fnameRules = ref([
     (v: string) => !!v || 'Name is required',
-    (v: string) => (v && v.length <= 10) || 'Name must be less than 10 characters'
+    (v: string) => (v && v.length <= 25) || 'Name must be less than 25 characters'
 ]);
+const activities = ref<Array<IActivity>>([{name:""}]);
+watchEffect( async()=>{
+    useAxiosRequest().get(Parent.activity.list).then(res=>{
+        activities.value = res.data.activities
+        activity.value = activities.value[0].name
+    }).catch(error=>{
+        console.log(error)
+    })
+
+})
+
+const saveStepUser = ()=>{
+    if(user.value.username.length > 2 && activity.value && user.value.password.length > 3){
+        user.value.activity = activity.value
+        storeUser.persistance(user.value);
+        alert("success");
+    }
+    else{
+        alert("bug");
+    }
+}
 </script>
 <template>
-    <v-row class="d-flex mb-3">
-        <v-col cols="6" sm="6">
-            <v-btn variant="outlined" size="large" class="border text-subtitle-1 text-gray200 font-weight-semibold" block>
-                <img :src="google" height="16" class="mr-2" alt="google" />
-                <span class="d-sm-flex d-none mr-1">Sign in with</span>Google
-            </v-btn>
-        </v-col>
-        <v-col cols="6" sm="6">
-            <v-btn variant="outlined" size="large" class="border text-subtitle-1 text-gray200 font-weight-semibold" block>
-                <img :src="facebook" width="25" height="25" class="mr-1" alt="facebook" />
-                <span class="d-sm-flex d-none mr-1">Sign in with</span>FB
-            </v-btn>
-        </v-col>
-    </v-row>
-    <div class="d-flex align-center text-center mb-6">
-        <div class="text-h6 w-100 px-5 font-weight-regular auth-divider position-relative">
-            <span class="bg-surface px-5 py-3 position-relative text-subtitle-1 text-grey100">or sign in with</span>
-        </div>  
-    </div>
     <v-form ref="form" v-model="valid" lazy-validation action="/pages/boxedlogin" class="mt-5">
-        <v-label class="text-subtitle-1 font-weight-medium pb-2">Name</v-label>
-        <VTextField v-model="fname" :rules="fnameRules" required ></VTextField>
-        <v-label class="text-subtitle-1 font-weight-medium pb-2">Email Adddress</v-label>
-        <VTextField v-model="email" :rules="emailRules" required ></VTextField>
-        <v-label class="text-subtitle-1 font-weight-medium pb-2">Password</v-label>
+        <v-row class="mt-1">
+            <v-col cols="12" md="6" >
+                <v-label class="text-subtitle-1 font-weight-medium pb-2">Nom de famille</v-label>
+                <VTextField v-model="user.family_name" ></VTextField>
+            </v-col>
+            <v-col cols="12" md="6">
+                <v-label class="text-subtitle-1 font-weight-medium pb-2">Prenom</v-label>
+                <VTextField v-model="user.last_name"></VTextField>
+            </v-col>
+        </v-row>
+        <v-label class="text-subtitle-1 font-weight-medium pb-2">Activité*</v-label>
+        <v-autocomplete v-model="activity"  item-title="name" item-value="name"   :items="activities" color="primary" variant="outlined" hide-details></v-autocomplete>
+        <v-row class="mt-1">
+            <v-col cols="12" md="6">
+                <v-label class="text-subtitle-1 font-weight-medium pb-2">Nom d'Utilisateur*</v-label>
+                <VTextField v-model="user.username" :rules="userNameRule" required ></VTextField>
+            </v-col>
+            <v-col cols="12" md="6">
+                <v-label class="text-subtitle-1 font-weight-medium pb-2">Email Adddress*</v-label>
+                <VTextField v-model="user.email" :rules="emailRules"></VTextField>
+            </v-col>
+        </v-row>
+        <v-label class="text-subtitle-1 font-weight-medium pb-2">Password*</v-label>
         <VTextField
-            v-model="password"
-            :counter="10"
+            v-model="user.password"
+            :counter="100"
             :rules="passwordRules"
             required
             variant="outlined"
             type="password"
             color="primary"
         ></VTextField>
-        <v-btn size="large" class="mt-2" color="primary" block submit rounded="pill">Sign Up</v-btn>
+        <v-btn size="large" class="mt-2" color="primary" block submit rounded="pill" @click="saveStepUser()" >Sauvegarder</v-btn>
     </v-form>
 </template>
