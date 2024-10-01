@@ -1,8 +1,12 @@
 import './assets/main.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import messages from './utils/locale/message';
+import vuetify from './utils/plugins/vuetify';
+import '@/scss/style.scss';
 // import vuetify from './plugins/vuetify';
 import PerfectScrollbar from 'vue3-perfect-scrollbar';
+import '@progress/kendo-theme-default/dist/all.css';
 //@ts-ignore
 import VueApexCharts from 'vue3-apexcharts';
 import VueTablerIcons from 'vue-tabler-icons';
@@ -16,8 +20,7 @@ import 'vue3-easy-data-table/dist/style.css';
 import { createI18n } from 'vue-i18n';
 //ScrollTop
 import VueScrollTo from 'vue-scrollto';
-import messages from './utils/locale/message';
-import vuetify from './utils/plugins/vuetify';
+
 
 const i18n = createI18n({
     locale: 'en',
@@ -27,7 +30,7 @@ const i18n = createI18n({
 });
 
 const app = createApp(App)
-
+//refactor
 app.component('EasyDataTable', Vue3EasyDataTable);
 app.use(PerfectScrollbar);
 app.use(createPinia());
