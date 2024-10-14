@@ -1,6 +1,7 @@
-import './assets/main.css'
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+import './assets/main.css';
+import './traces';
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
 import messages from './utils/locale/message';
 import vuetify from './utils/plugins/vuetify';
 import '@/scss/style.scss';
@@ -10,8 +11,8 @@ import '@progress/kendo-theme-default/dist/all.css';
 //@ts-ignore
 import VueApexCharts from 'vue3-apexcharts';
 import VueTablerIcons from 'vue-tabler-icons';
-import App from './App.vue'
-import router from './router'
+import App from './App.vue';
+import router from './router';
 import Maska from 'maska';
 // Table
 import Vue3EasyDataTable from 'vue3-easy-data-table';
@@ -20,7 +21,6 @@ import 'vue3-easy-data-table/dist/style.css';
 import { createI18n } from 'vue-i18n';
 //ScrollTop
 import VueScrollTo from 'vue-scrollto';
-
 
 const i18n = createI18n({
     locale: 'en',

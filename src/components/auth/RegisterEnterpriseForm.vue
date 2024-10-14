@@ -61,7 +61,7 @@ const saveEntepriseUser = ()=>{
         enterprise.value.secteur = sector.value;
         enterprise.value.status_juridique = statusJuridique.value;
         storeEnteprise.persistance(enterprise.value);
-        alert("success");
+     
     }
     else{
         alert("bug");

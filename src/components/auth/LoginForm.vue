@@ -11,6 +11,7 @@ import router from '@/router';
 import { useAxiosRequest } from '@/utils/service/custom';
 import { Parent } from '@/utils/service/proxy';
 import { setupWorkSpace } from '@/stores/login/workspace';
+import { useUserLocal } from '@/stores/user/local';
 
 const checkbox = ref(false);
 const show1 = ref(false);
@@ -34,6 +35,12 @@ async function sendPostData() {
         }
         useAxiosRequest().post(Parent.user.auth,data).then(res =>{
             if(res.status == 200){
+                const dataUser = {
+                    user  : res.data.user,
+                    token : res.data.token
+                }
+                useUserLocal().persistance(dataUser)
+                
                 callComponentWithDelay("/dashboard")
             }
         }).catch(error =>{
@@ -81,14 +88,7 @@ async function sendPostData() {
             class="pwdInput"
         ></VTextField>
         <div class="d-flex flex-wrap align-center my-3 ml-n2">
-            <!-- <v-checkbox v-model="checkbox" :rules="[(v:any) => !!v || 'You must agree to continue!']" required hide-details color="primary">
-                <template v-slot:label class="">Remeber this Device</template>
-            </v-checkbox> -->
-            <!-- <div class="ml-sm-auto">
-                <RouterLink to="" class="text-primary text-decoration-none text-body-1 opacity-1 font-weight-medium"
-                    >Forgot Password ?</RouterLink
-                >
-            </div> -->
+          
         </div>
         <v-btn size="large" rounded="pill" :loading="show1" color="primary" class="bg-red-500"  block type="submit" flat>Continuer</v-btn>
        

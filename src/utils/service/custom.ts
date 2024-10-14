@@ -1,3 +1,4 @@
+import { useUserLocal } from "@/stores/user/local";
 import axios, { type AxiosInstance } from "axios";
 
 const serverUrl = "127.0.0.1"
@@ -10,7 +11,7 @@ export const useAxiosRequest = (token:string = "") : AxiosInstance  =>{
           accept: 'application/json',
           "Content-type"      :   "application/json",
           "X-Requested-With"  :   "XMLHttpRequest",
-          //  "Authorization"     :   `x-auth-token ${token}`
+          "x-auth-token"     :   `${token}`
         },
       })
       return useAxios

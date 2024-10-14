@@ -1,5 +1,4 @@
 <script lang="tsx" setup>
-
 import { process, filterBy, type CompositeFilterDescriptor, type SortDescriptor } from '@progress/kendo-data-query';
 import { Grid, GridToolbar } from '@progress/kendo-vue-grid';
 import { ref, watchEffect } from 'vue';
@@ -8,9 +7,11 @@ import type { IChartAccount } from '@/utils/interface/core/finance/IChartAccount
 import { colChartAccount } from '@/utils/kendo/service_finance/chart_account';
 import { useAxiosRequest } from '@/utils/service/custom';
 import { Parent } from '@/utils/service/proxy';
+import { useChartAccount } from '@/stores/core/finance/chart_account';
 
-
+// const useChartData = useChartAccount()
 const chartAccount = ref<Array<IChartAccount>>([])
+
 const loader       = ref<Boolean>(false)
 const show       = ref<Boolean>(true)
 const type = "infinite-spinner"
@@ -71,18 +72,19 @@ const cellClick = (e: any) => {
         loader.value = false;
       }, 300);
     } 
-
     const fetchAllData = () =>{
       watchEffect(async()=>{
-        await(useAxiosRequest().get(`/chart/account/all`)
+          // chartAccount.value =  useChartData.config
+        await(
+        useAxiosRequest().get(`/chart/account/all`)
             .then(function (response) {
               chartAccount.value = response.data.chart_account as Array<IChartAccount>
+              //useChartData.persistance(chartAccount.value);
             })
             .catch(function (error) {
                 console.log(error);
             })
             .finally(function () {
-                //alert("Elie Oko");
                 show.value = false
             }));
     })
@@ -90,23 +92,36 @@ const cellClick = (e: any) => {
     fetchAllData()
 </script>
 <template>
-     <grid
-    @pagechange="pageChangeHandler"
-    :total ="chartAccount.length"
-    :data-items="chartAccount"
-    :columns="colChartAccount as any"
-    :edit-field="'inEdit'"
-    :filter="filter"
-    @cellclick="cellClick"
-    @itemchange="itemChange"
-    @filterchange="filterChange"
-    :loader="loader"
-    :column-menu="true"
-    :pageable="gridPageable"
-    :sortable="sortable"
-    :sort="sort"
-    :take="take"
-    :skip="skip"
-    >
-  </grid>
+  <v-card elevation="10">
+    <v-card-text>
+     
+      <v-row class="mt-5">
+        <grid
+        @pagechange="pageChangeHandler"
+        :total ="chartAccount.length"
+        :data-items="chartAccount"
+        :columns="colChartAccount as any"
+        :edit-field="'inEdit'"
+        :filter="filter"
+        @cellclick="cellClick"
+        @itemchange="itemChange"
+        @filterchange="filterChange"
+        :loader="loader"
+        :column-menu="true"
+        :pageable="gridPageable"
+        :sortable="sortable"
+        :sort="sort"
+        :take="take"
+        :skip="skip">
+      </grid>
+      </v-row>
+     
+</v-card-text>
+</v-card>
+<div v-if="show" class="k-loader-container k-loader-container-md k-loader-top">
+      <div class="k-loader-container-overlay k-overlay-dark" />
+      <div class="k-loader-container-inner">
+        <Loader :size="'large'" :type="type" />
+      </div>
+    </div>
 </template>

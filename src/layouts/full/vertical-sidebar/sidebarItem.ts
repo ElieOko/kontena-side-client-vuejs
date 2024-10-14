@@ -367,8 +367,36 @@ const sidebarItem: menu[] = [
       }
   ,
   { header: 'Stock & Inventaire' },
-
-
+  {
+    title: 'Approvisionnement',
+    icon: 'fluent:branch-request-20-regular',
+    BgColor: 'secondary',
+    to: '/service/achat/stock/request/list',
+  },
+  {
+    title: 'Inventaire',
+    icon: 'arcticons:inventory',
+    BgColor: 'secondary',
+    to: '/service/stock/inventaire/list',
+  },
+  {
+    title: 'Produit',
+    icon: 'fluent-mdl2:product-variant',
+    BgColor: 'secondary',
+    to: '/service/stock/product/list',
+  },
+  {
+    title: 'Stock',
+    icon: 'arcticons:stock-trainer',
+    BgColor: 'secondary',
+    to: '/service/stock/list',
+  },
+  {
+    title: 'Rapport',
+    icon: 'game-icons:chart',
+    BgColor: 'secondary',
+    to: '/service/stock/rapport/list',
+  },
   { header: 'Finance' },
   {
     title: 'Plan comptable',

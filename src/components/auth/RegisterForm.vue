@@ -45,7 +45,7 @@ const saveStepUser = ()=>{
     if(user.value.username.length > 2 && activity.value && user.value.password.length > 3){
         user.value.activity = activity.value
         storeUser.persistance(user.value);
-        alert("success");
+       
     }
     else{
         alert("bug");

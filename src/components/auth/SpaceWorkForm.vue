@@ -30,8 +30,10 @@ const sendPostData = async ()=>{
     if(workspace.value.length != 3){
         show1.value = true;
         const data ={name:workspace.value};
+        console.time('requeteAsync');
         await useAxiosRequest().post(Parent.workspace.auth,data).then(res=>{
             if(res.status == 201) alert("Succes");
+            console.timeEnd('requeteAsync');
             setupWorkSpace().persistance({workspace:res.data.workspace});
             callComponentWithDelay("/auth/login");
         }).catch(error=>{

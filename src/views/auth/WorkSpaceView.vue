@@ -15,7 +15,7 @@ import SpaceWorkForm from '@/components/auth/SpaceWorkForm.vue';
                         <v-card elevation="10" class="px-sm-1 px-0  mx-auto index-2" max-width="450">
                             <v-card-item class="pa-sm-8">
                                 <div class="d-flex justify-center my-5">
-                                    <Logo />
+                                        Kontena-Editor
                                 </div>
                                 <p class="text-subtitle-1 text-grey100 text-center text-10">
                                     {{ "Connectez-vous à votre espace de travail" }}

@@ -3,7 +3,9 @@ import { CircleXIcon, MailIcon } from 'vue-tabler-icons';
 import { profileDD } from '@/_mockApis/headerData';
 // import { useAuthStore } from '@/stores/auth';
 import { Icon } from '@iconify/vue';
-
+import { useUserLocal } from '@/stores/user/local';
+//
+const stateUser = useUserLocal();
 // const authStore = useAuthStore();
 </script>
 
@@ -19,8 +21,8 @@ import { Icon } from '@iconify/vue';
                         <img src="@/assets/images/profile/user6.jpg" width="50" alt="Mike Nielsen" />
                     </v-avatar>
                     <div class="ml-md-4 d-md-block d-none">
-                        <h6 class="text-h6 d-flex align-center text-black font-weight-semibold">Mike Nielsen</h6>
-                        <span class="text-subtitle-2 font-weight-medium text-grey100">Admin</span>
+                        <h6 class="text-h6 d-flex align-center text-black font-weight-semibold">{{ stateUser.local?.user?.username }}</h6>
+                        <span class="text-subtitle-2 font-weight-medium text-grey100">{{ stateUser.local?.user?.activity }}</span>
                     </div>
                 </div>
             </div>
@@ -37,11 +39,11 @@ import { Icon } from '@iconify/vue';
                         <img src="@/assets/images/profile/user6.jpg" width="90" />
                     </v-avatar>
                     <div class="ml-5">
-                        <h6 class="text-h5 mb-n1">Mike Nielsen</h6>
-                        <span class="text-subtitle-1 font-weight-regular text-grey100 font-weight-medium">Admin</span>
+                        <h6 class="text-h5 mb-n1">{{ stateUser.local?.user?.username }}</h6>
+                        <span class="text-subtitle-1 font-weight-regular text-grey100 font-weight-medium">{{ stateUser.local?.user?.activity }}</span>
                         <div class="d-flex align-center mt-1">
                             <MailIcon size="18" stroke-width="1.5" class="text-grey100" />
-                            <span class="text-subtitle-1 text-grey100 font-weight-medium ml-2">info@spikeadmin.com</span>
+                            <span class="text-subtitle-1 text-grey100 font-weight-medium ml-2">{{stateUser.local?.user?.email  }}</span>
                         </div>
                     </div>
                 </div>
