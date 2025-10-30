@@ -74,7 +74,13 @@ const pushData = async()=>{
         }
         watchEffect(async()=>{
             
-           await useAxiosRequest().post("/product/store",objSend).then(resp=>{
+            await useAxiosRequest().post("/product/store", objSend,
+             {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }
+           ).then(resp=>{
                 alert(resp.data.message)
             }).catch(error=>{
                 alert(error.message)
