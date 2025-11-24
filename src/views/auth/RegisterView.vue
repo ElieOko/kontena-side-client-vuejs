@@ -19,9 +19,9 @@ const thankyou = ref(false);
 const storeUser = stepUserRegister();
 const storeEnteprise = stepEnterpriseRegister();
 const storeConfigService = stepConfigRegister()
-const getCart = computed(() => {
-    return store.cart;
-});
+// const getCart = computed(() => {
+//     return store.cart;
+// });
 const tab = ref('tab-1');
 function changeTab(e: string) {
     tab.value = e;
@@ -55,12 +55,13 @@ const sendPostData = async ()=>{
                                 workspace : space_id
                                }
                                useAxiosRequest().post(Parent.workspaceUser.create,bs).then(resp=>{
-                                    if(resp.status == 201){
+                                   if (resp.status == 201) {
+                                          console.log("Save");
                                         console.log(resp.data.workspace_user);
                                         useAxiosRequest().post(Parent.enterprise.create,storeEnteprise.enterprise).then(resp=>{
                                             if(resp.status == 201){
                                                 console.log(resp.data.message);
-                                                console.log(resp.data.enterprise);
+                                                // console.log(resp.data.enterprise);
                                                 callComponentWithDelay("/dashboard");
                                             }
                                             else{

@@ -31,13 +31,13 @@ watchEffect( async()=>{
 const saveStepService = ()=>{
     listCheckbox.value.map((v:Boolean,k:number)=>{
         if(v == true){
-            alert("d")
+          //  alert("d")
             workspaceConfig.value.microservice.push(services.value[k].name as string);
         }
     });
     if(workspaceConfig.value.microservice.length != 0 && workspaceConfig.value.workspace.length > 3){
         storeConfigService.persistance(workspaceConfig.value);
-        alert("success");
+        alert("Finaliser maintenant");
     }
     else{
         alert("bug")
