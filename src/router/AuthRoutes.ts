@@ -5,7 +5,6 @@ const AuthRoutes = {
         requiresAuth: false
     },
     children: [
-
         {
             name: 'register',
             path: '/auth/register',
@@ -17,10 +16,16 @@ const AuthRoutes = {
             component: () => import('@/views/auth/LoginView.vue')
         },
         {
-            name: 'workspace',
-            path: '/auth/workspace-sign',
-            component: () => import('@/views/auth/WorkSpaceView.vue')
-        }
+            name: 'dashboard-login',
+            path: '/auth/dashboard-login',
+            component: () => import('@/views/auth/DashboardLoginView.vue')
+        },
+
+        // {
+        //     name: 'workspace',
+        //     path: '/auth/workspace-sign',
+        //     component: () => import('@/views/auth/WorkSpaceView.vue')
+        // }
     ]
 };
 // suffix="@example.com"

@@ -25,7 +25,7 @@ const customizer = useCustomizerStore();
             </v-navigation-drawer>
             <VerticalSidebarVue v-if="!customizer.setHorizontalLayout" />
             <div :class="customizer.boxed ? 'maxWidth' : 'full-header'"><VerticalHeaderVue v-if="!customizer.setHorizontalLayout" /></div>
-            <div :class="customizer.boxed ? 'maxWidth' : 'full-header'"><HorizontalHeader v-if="customizer.setHorizontalLayout" /></div>
+<!--            <div :class="customizer.boxed ? 'maxWidth' : 'full-header'"><HorizontalHeader v-if="customizer.setHorizontalLayout" /></div>-->
             <HorizontalSidebar v-if="customizer.setHorizontalLayout" />
 
             <v-main>
@@ -60,7 +60,7 @@ const customizer = useCustomizerStore();
             </v-navigation-drawer>
             <VerticalSidebarVue v-if="!customizer.setHorizontalLayout" />
             <div :class="customizer.boxed ? 'maxWidth' : 'full-header'"><VerticalHeaderVue v-if="!customizer.setHorizontalLayout" /></div>
-            <div :class="customizer.boxed ? 'maxWidth' : 'full-header'"><HorizontalHeader v-if="customizer.setHorizontalLayout" /></div>
+<!--            <div :class="customizer.boxed ? 'maxWidth' : 'full-header'"><HorizontalHeader v-if="customizer.setHorizontalLayout" /></div>-->
             <HorizontalSidebar v-if="customizer.setHorizontalLayout" />
 
             <v-main>
