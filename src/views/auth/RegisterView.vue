@@ -17,12 +17,6 @@ const thankyou = ref(false);
 const storeUser = stepUserRegister();
 const storeEnteprise = stepEnterpriseRegister();
 const storeConfigService = stepConfigRegister()
-<<<<<<< HEAD
-// const getCart = computed(() => {
-//     return store.cart;
-// });
-=======
->>>>>>> c370d7a (fix:review build)
 const tab = ref('tab-1');
 function changeTab(e: string) {
     tab.value = e;
