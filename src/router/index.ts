@@ -9,7 +9,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component:  import('@/views/auth/SololaHomeView.vue')
     },
     MainRoutes,
     AuthRoutes
