@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { Icon } from '@iconify/vue';
 import { useDashboardStore } from '@/stores/dashboard/dashboard';
+import IpasLogo from '@/components/shared/IpasLogo.vue';
 
 const router = useRouter();
 const store = useDashboardStore();
@@ -46,10 +47,7 @@ const submit = async () => {
         <v-col cols="12" lg="6" class="solola-auth__brand d-none d-lg-flex">
           <div class="solola-auth__brand-inner">
             <div class="solola-auth__brand-top">
-              <div class="solola-auth__badge">
-                <Icon icon="solar:bolt-bold" width="14" />
-                Ipas
-              </div>
+              <IpasLogo :height="44" class="solola-auth__logo mb-4" />
               <h1 class="solola-auth__title">Solola na nga Admin</h1>
               <p class="solola-auth__subtitle">
                 Pilotez l'engagement de votre plateforme conversationnelle avec clarté et précision.
@@ -78,18 +76,13 @@ const submit = async () => {
         <v-col cols="12" lg="6" class="solola-auth__form-col">
           <div class="solola-auth__form-wrap">
             <div class="solola-auth__mobile-brand d-lg-none">
-              <div class="solola-auth__badge solola-auth__badge--light">
-                <Icon icon="solar:bolt-bold" width="14" />
-                Ipas
-              </div>
+              <IpasLogo :height="36" class="mb-3" />
               <h2 class="solola-auth__mobile-title">Solola na nga Admin</h2>
             </div>
 
             <v-card class="solola-auth__card" elevation="0">
               <div class="solola-auth__card-header">
-                <div class="solola-auth__avatar">
-                  <Icon icon="solar:shield-user-bold-duotone" width="28" />
-                </div>
+                <IpasLogo :height="32" class="solola-auth__card-logo mb-3" />
                 <h3 class="solola-auth__card-title">Connexion administrateur</h3>
                 <p class="solola-auth__card-desc">Entrez vos identifiants pour accéder au tableau de bord</p>
               </div>
@@ -372,6 +365,11 @@ const submit = async () => {
 .solola-auth__card-header {
   text-align: center;
   margin-bottom: 1.75rem;
+}
+
+.solola-auth__card-logo {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .solola-auth__avatar {

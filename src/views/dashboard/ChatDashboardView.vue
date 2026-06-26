@@ -4,6 +4,7 @@ import { storeToRefs } from 'pinia';
 import type { GrowthGranularity, ThemePeriodFilter } from '@/utils/service/dashboardApi';
 import { themePeriodLabel } from '@/utils/service/dashboardApi';
 import { useDashboardStore } from '@/stores/dashboard/dashboard';
+import IpasLogo from '@/components/shared/IpasLogo.vue';
 
 const store = useDashboardStore();
 const {
@@ -247,9 +248,7 @@ onMounted(loadAll);
       <div class="d-flex align-center justify-space-between flex-wrap ga-4">
         <div>
           <div class="d-flex align-center ga-3 mb-2">
-            <v-chip size="small" color="teal" variant="flat" class="font-weight-bold">
-              Ipas
-            </v-chip>
+            <IpasLogo :height="32" />
             <span class="text-caption text-medium-emphasis">Plateforme Solola na nga</span>
           </div>
           <h1 class="text-h4 font-weight-bold mb-1">Solola na nga Admin</h1>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref, shallowRef } from 'vue';
+import { computed } from 'vue';
 import { useCustomizerStore } from '@/stores/customizer';
+import { useDashboardStore } from '@/stores/dashboard/dashboard';
 import sidebarItems from './sidebarItem';
 //@ts-ignore
 import NavGroup from './NavGroup/index.vue';
@@ -10,6 +11,7 @@ import NavItem from './NavItem/index.vue';
 import NavCollapse from './NavCollapse/NavCollapse.vue';
 import ExtraBox from './extrabox/ExtraBox.vue';
 import Moreoption from './MoreOption/Moreoption.vue';
+import IpasLogo from '@/components/shared/IpasLogo.vue';
 //@ts-ignore
 import Logo from '../logo/Logo.vue';
 // import { useAuthStore } from '@/stores/auth';
@@ -17,7 +19,20 @@ import { Icon } from '@iconify/vue';
 
 
 const customizer = useCustomizerStore();
-const sidebarMenu = shallowRef(sidebarItems);
+const dashboardStore = useDashboardStore();
+
+const sidebarMenu = computed(() => {
+  const items = [...sidebarItems];
+  if (dashboardStore.isSuperAdmin) {
+    items.push({
+      title: 'Comptes admin',
+      icon: 'solar:shield-user-linear',
+      BgColor: 'warning',
+      to: '/dashboard/admin-users',
+    });
+  }
+  return items;
+});
 // const authStore = useAuthStore();
 </script>
 
@@ -27,8 +42,8 @@ const sidebarMenu = shallowRef(sidebarItems);
             class="leftSidebar ml-sm-5 mt-sm-5 bg-containerBg" elevation="10" :rail="customizer.mini_sidebar"
             expand-on-hover width="270">
             <div class="pa-5 pl-4">
-                <h2 class="text-subtitle-1 font-weight-bold mb-0">Solola na nga Admin</h2>
-                <p class="text-caption text-medium-emphasis mb-0">Ipas</p>
+                <IpasLogo :height="customizer.mini_sidebar ? 28 : 36" class="mb-2" />
+                <h2 v-show="!customizer.mini_sidebar" class="text-subtitle-1 font-weight-bold mb-0">Solola na nga Admin</h2>
             </div>
             <!-- ---------------------------------------------- -->
             <!---Navigation -->

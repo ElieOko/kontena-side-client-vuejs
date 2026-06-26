@@ -15,3 +15,24 @@ export const requireDashboardAuth = (
   }
   next('/auth/dashboard-login');
 };
+
+export const requireSuperAdmin = (
+  _to: RouteLocationNormalized,
+  _from: RouteLocationNormalized,
+  next: NavigationGuardNext,
+) => {
+  const store = useDashboardStore();
+  store.syncAuthFromStorage();
+
+  if (!store.isAuthenticated) {
+    next('/auth/dashboard-login');
+    return;
+  }
+
+  if (store.isSuperAdmin) {
+    next();
+    return;
+  }
+
+  next('/dashboard/chat');
+};

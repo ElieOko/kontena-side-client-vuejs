@@ -1,4 +1,4 @@
-import { requireDashboardAuth } from './dashboardGuard';
+import { requireDashboardAuth, requireSuperAdmin } from './dashboardGuard';
 
 export const MainRoutes ={
     path: '/main',
@@ -25,6 +25,12 @@ export const MainRoutes ={
             path: '/dashboard/users',
             component: () => import('@/views/dashboard/UsersDashboardView.vue'),
             beforeEnter: requireDashboardAuth,
+        },
+        {
+            name: 'admin-users-dashboard',
+            path: '/dashboard/admin-users',
+            component: () => import('@/views/dashboard/AdminUsersView.vue'),
+            beforeEnter: requireSuperAdmin,
         },
         /**
          * 

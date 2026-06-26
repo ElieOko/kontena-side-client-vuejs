@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 import { useDashboardStore } from '@/stores/dashboard/dashboard';
+import IpasLogo from '@/components/shared/IpasLogo.vue';
 
 const router = useRouter();
 const store = useDashboardStore();
@@ -36,8 +37,7 @@ const goToDashboard = () => {
   <div class="home">
     <header class="home__header">
       <div class="home__brand">
-        <span class="home__org">Ipas</span>
-        <span class="home__sep" aria-hidden="true">/</span>
+        <IpasLogo :height="40" />
         <span class="home__product">Solola na nga Admin</span>
       </div>
       <button type="button" class="home__link" @click="goToLogin">Connexion</button>
@@ -122,21 +122,9 @@ const goToDashboard = () => {
 
 .home__brand {
   display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 1rem;
   flex-wrap: wrap;
-}
-
-.home__org {
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--green);
-}
-
-.home__sep {
-  color: #d6d3d1;
 }
 
 .home__product {

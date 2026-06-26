@@ -9,6 +9,8 @@ import {
   getThemePeriodParams,
   setDashboardToken,
   setDashboardUser,
+  type AdminUserCreatePayload,
+  type AdminUserUpdatePayload,
   type DashboardStats,
   type DashboardUser,
   type GrowthGranularity,
@@ -39,24 +41,29 @@ export const useDashboardStore = defineStore('dashboard', {
     themeFilter: 'all' as ThemePeriodFilter,
     themesByFilter: {} as Partial<Record<ThemePeriodFilter, ThemeStats>>,
     platformUsers: [] as PlatformUser[],
+    adminUsers: [] as DashboardUser[],
     periodUsers: [] as PlatformUser[],
     globalDateFrom: '',
     globalDateTo: '',
     globalSearchActive: false,
     loadingStats: false,
     loadingUsers: false,
+    loadingAdminUsers: false,
+    savingAdminUser: false,
     loadingGrowth: false,
     loadingThemes: false,
     loadingGlobalSearch: false,
     error: '',
     statsLoaded: false,
     usersLoaded: false,
+    adminUsersLoaded: false,
     growthLoaded: {} as Partial<Record<GrowthGranularity, boolean>>,
     themesLoaded: {} as Partial<Record<ThemePeriodFilter, boolean>>,
   }),
 
   getters: {
     isAuthenticated: (state) => !!state.token,
+    isSuperAdmin: (state) => state.user?.role.name === 'superadmin',
     growth: (state) => state.growthByGranularity[state.growthGranularity] ?? null,
     globalPeriodParams: (state): StatsPeriodParams | undefined =>
       state.globalSearchActive ? buildPeriodParams(state.globalDateFrom, state.globalDateTo) : undefined,
@@ -83,8 +90,10 @@ export const useDashboardStore = defineStore('dashboard', {
     isLoading: (state) =>
       state.loadingStats ||
       state.loadingUsers ||
+      state.loadingAdminUsers ||
       state.loadingGrowth ||
       state.loadingThemes ||
+      state.savingAdminUser ||
       state.loadingGlobalSearch,
   },
 
@@ -101,12 +110,14 @@ export const useDashboardStore = defineStore('dashboard', {
       this.themesByFilter = {};
       this.themeFilter = 'all';
       this.platformUsers = [];
+      this.adminUsers = [];
       this.periodUsers = [];
       this.globalDateFrom = '';
       this.globalDateTo = '';
       this.globalSearchActive = false;
       this.statsLoaded = false;
       this.usersLoaded = false;
+      this.adminUsersLoaded = false;
       this.growthLoaded = {};
       this.themesLoaded = {};
       this.error = '';
@@ -404,6 +415,76 @@ export const useDashboardStore = defineStore('dashboard', {
         this.fetchGrowth(this.growthGranularity, force),
         this.fetchThemes(this.themeFilter, force),
       ]);
+    },
+
+    async fetchAdminUsers(force = false) {
+      if (!this.token || !this.isSuperAdmin) return;
+      if (!force && this.adminUsersLoaded) return;
+
+      this.loadingAdminUsers = true;
+      this.error = '';
+
+      try {
+        const response = await dashboardApi.getAdminUsers();
+        this.adminUsers = response.data.items;
+        this.adminUsersLoaded = true;
+      } catch (err) {
+        this.handleError(err, 'Impossible de charger les comptes administrateurs.');
+        throw err;
+      } finally {
+        this.loadingAdminUsers = false;
+      }
+    },
+
+    async createAdminUser(payload: AdminUserCreatePayload) {
+      if (!this.isSuperAdmin) return;
+
+      this.savingAdminUser = true;
+      this.error = '';
+
+      try {
+        const response = await dashboardApi.createAdminUser(payload);
+        this.adminUsers = [response.data, ...this.adminUsers];
+        return response.data;
+      } catch (err) {
+        if (axios.isAxiosError(err) && err.response?.status === 409) {
+          this.error = String(err.response.data?.detail ?? 'Ce compte existe déjà.');
+        } else {
+          this.handleError(err, 'Impossible de créer le compte.');
+        }
+        throw err;
+      } finally {
+        this.savingAdminUser = false;
+      }
+    },
+
+    async updateAdminUser(userId: number, payload: AdminUserUpdatePayload) {
+      if (!this.isSuperAdmin) return;
+
+      this.savingAdminUser = true;
+      this.error = '';
+
+      try {
+        const response = await dashboardApi.updateAdminUser(userId, payload);
+        const index = this.adminUsers.findIndex((user) => user.id === userId);
+        if (index !== -1) {
+          this.adminUsers[index] = response.data;
+        }
+        return response.data;
+      } catch (err) {
+        if (axios.isAxiosError(err) && err.response?.data?.detail) {
+          this.error = String(err.response.data.detail);
+        } else {
+          this.handleError(err, 'Impossible de mettre à jour le compte.');
+        }
+        throw err;
+      } finally {
+        this.savingAdminUser = false;
+      }
+    },
+
+    async toggleAdminUserActive(user: DashboardUser) {
+      await this.updateAdminUser(user.id, { is_active: !user.is_active });
     },
   },
 });

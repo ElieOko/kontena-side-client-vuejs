@@ -3,6 +3,7 @@ import { computed, onMounted, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { formatPhoneNumber, genderColor } from '@/utils/service/dashboardApi';
 import { useDashboardStore } from '@/stores/dashboard/dashboard';
+import IpasLogo from '@/components/shared/IpasLogo.vue';
 
 const store = useDashboardStore();
 const { platformUsers, loadingUsers, error } = storeToRefs(store);
@@ -51,7 +52,7 @@ onMounted(() => store.ensureUsersData());
     <header class="page-hero mb-6">
       <div class="d-flex align-center justify-space-between flex-wrap ga-4">
         <div>
-          <v-chip size="small" color="teal" variant="flat" class="font-weight-bold mb-2">Ipas</v-chip>
+          <IpasLogo :height="32" class="mb-2" />
           <h1 class="text-h4 font-weight-bold mb-1">Utilisateurs de la plateforme</h1>
           <p class="text-body-2 text-medium-emphasis mb-0">
             Numéros de téléphone uniques et genre déclaré via Solola na nga

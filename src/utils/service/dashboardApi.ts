@@ -1,6 +1,6 @@
 import axios, { type AxiosInstance } from 'axios';
 
-const baseURL = import.meta.env.VITE_DASHBOARD_API_URL ?? 'http://127.0.0.1:8000/api/v1';
+const baseURL = 'https://strong.sololananga.org/api/v1';
 
 export interface DashboardStatItem {
   label: string;
@@ -65,6 +65,25 @@ export interface DashboardUser {
   email: string | null;
   is_active: boolean;
   role: { id: number; name: string };
+  created_at?: string;
+}
+
+export interface AdminUsersList {
+  total: number;
+  items: DashboardUser[];
+}
+
+export interface AdminUserCreatePayload {
+  username: string;
+  password: string;
+  email?: string | null;
+  role: 'admin' | 'viewer';
+}
+
+export interface AdminUserUpdatePayload {
+  is_active?: boolean;
+  password?: string;
+  email?: string | null;
 }
 
 export interface DashboardAuthResponse {
@@ -193,5 +212,14 @@ export const dashboardApi = {
   },
   getPlatformUsers(period?: StatsPeriodParams) {
     return createDashboardApi().get<PlatformUsersList>('/dashboard/stats/users/list', { params: period });
+  },
+  getAdminUsers() {
+    return createDashboardApi().get<AdminUsersList>('/dashboard/admin-users');
+  },
+  createAdminUser(payload: AdminUserCreatePayload) {
+    return createDashboardApi().post<DashboardUser>('/dashboard/admin-users', payload);
+  },
+  updateAdminUser(userId: number, payload: AdminUserUpdatePayload) {
+    return createDashboardApi().patch<DashboardUser>(`/dashboard/admin-users/${userId}`, payload);
   },
 };
