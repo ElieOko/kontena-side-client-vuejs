@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, computed,onBeforeMount  } from 'vue';
 import { useCustomizerStore } from '../../../stores/customizer';
-import { useEcomStore } from '@/stores/apps/eCommerce';
 import { ShoppingCartIcon, AlignLeftIcon, DotsIcon } from 'vue-tabler-icons';
 import LanguageDD from './LanguageDD.vue';
 import NotificationDD from './NotificationDD.vue';
@@ -22,12 +21,6 @@ function searchbox() {
 }
 watch(priority, (newPriority) => {
     priority.value = newPriority;
-});
-
-// count items
-const store = useEcomStore();
-const getCart = computed(() => {
-    return store.cart;
 });
 
 //For on Scroll Effect on Header

@@ -1,6 +1,3 @@
-import { IServiceXP } from "../service/IService"
-import { IUser } from "../user/IUser"
-
 export interface IWorkSpace{
     space_id : number
     workspace: string

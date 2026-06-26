@@ -159,14 +159,11 @@ export const useDashboardStore = defineStore('dashboard', {
 
       try {
         const period = this.currentPeriodParams();
-        const requests = [dashboardApi.getStats(period)];
+        const statsResponse = await dashboardApi.getStats(period);
+        this.stats = statsResponse.data;
         if (!this.globalSearchActive) {
-          requests.push(dashboardApi.getTopThemesByPeriod());
-        }
-        const results = await Promise.all(requests);
-        this.stats = results[0].data;
-        if (!this.globalSearchActive && results[1]) {
-          this.topThemes = results[1].data;
+          const topThemesResponse = await dashboardApi.getTopThemesByPeriod();
+          this.topThemes = topThemesResponse.data;
         }
         if (!this.globalSearchActive) {
           this.statsLoaded = true;

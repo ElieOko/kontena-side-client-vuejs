@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, computed } from 'vue';
 import { useCustomizerStore } from '../../../stores/customizer';
-import { useEcomStore } from '@/stores/apps/eCommerce';
 // Icon Imports
 import { GridDotsIcon, LanguageIcon, SearchIcon, Menu2Icon, BellRingingIcon, ShoppingCartIcon } from 'vue-tabler-icons';
 //@ts-ignore
@@ -26,12 +25,6 @@ function searchbox() {
 watch(priority, (newPriority) => {
     // yes, console.log() is a side effect
     priority.value = newPriority;
-});
-
-// count items
-const store = useEcomStore();
-const getCart = computed(() => {
-    return store.cart;
 });
 
 </script>

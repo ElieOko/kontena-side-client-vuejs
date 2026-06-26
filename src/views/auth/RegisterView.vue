@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { useEcomStore } from '@/stores/apps/eCommerce';
+import { ref } from 'vue';
 import { Home2Icon } from 'vue-tabler-icons';
 import StepUserView from './register/StepUserView.vue';
 import StepEnterpriseView from './register/StepEnterpriseView.vue';
@@ -14,14 +13,16 @@ import type { IWorkSpaceUser } from '@/utils/interface/workspace/IWorkSpace';
 import { progress } from '@/utils/animation/routage';
 import router from '@/router';
 
-const store = useEcomStore();
 const thankyou = ref(false);
 const storeUser = stepUserRegister();
 const storeEnteprise = stepEnterpriseRegister();
 const storeConfigService = stepConfigRegister()
+<<<<<<< HEAD
 // const getCart = computed(() => {
 //     return store.cart;
 // });
+=======
+>>>>>>> c370d7a (fix:review build)
 const tab = ref('tab-1');
 function changeTab(e: string) {
     tab.value = e;
@@ -103,7 +104,7 @@ const sendPostData = async ()=>{
                     </div>
                 </v-tab>
 
-                <v-tab value="tab-2" rounded="md" class="mb-3 mx-2 text-left" height="70" :disabled="store.cart.length < 1">
+                <v-tab value="tab-2" rounded="md" class="mb-3 mx-2 text-left" height="70" :disabled="!storeUser.user">
                     <Home2Icon stroke-width="1.5" width="20" class="v-icon--start" />
                     <div>
                         <div>Entreprise</div>
@@ -113,7 +114,7 @@ const sendPostData = async ()=>{
                     </div>
                 </v-tab>
 
-                <v-tab value="tab-3" rounded="md" class="mb-3 mx-2 text-left" height="70" :disabled="store.cart.length < 1">
+                <v-tab value="tab-3" rounded="md" class="mb-3 mx-2 text-left" height="70" :disabled="!storeEnteprise.enterprise">
                     <SettingsIcon stroke-width="1.5" width="20" class="v-icon--start" />
                     <div>
                         <div>Service</div>
