@@ -1,26 +1,22 @@
 <script setup lang="ts">
-import { Icon } from '@iconify/vue';
 import { useRouter } from 'vue-router';
 import { useDashboardStore } from '@/stores/dashboard/dashboard';
 
 const router = useRouter();
 const store = useDashboardStore();
 
-const features = [
+const highlights = [
   {
-    icon: 'solar:chart-2-bold-duotone',
-    title: 'Statistiques en temps réel',
-    desc: 'Suivez l\'activité des conversations, les thèmes consultés et la croissance des utilisateurs.',
+    title: 'Conversations',
+    desc: 'Volume de messages et fréquence des échanges avec le chatbot.',
   },
   {
-    icon: 'solar:users-group-rounded-bold-duotone',
-    title: 'Gestion des utilisateurs',
-    desc: 'Consultez les numéros uniques, le genre déclaré et l\'historique d\'activité de chaque utilisateur.',
+    title: 'Utilisateurs',
+    desc: 'Numéros uniques, genre déclaré et dates de première et dernière visite.',
   },
   {
-    icon: 'solar:shield-check-bold-duotone',
-    title: 'Accès sécurisé',
-    desc: 'Espace réservé aux administrateurs YouthSprint avec authentification dédiée.',
+    title: 'Thèmes abordés',
+    desc: 'Santé, droits et autres sujets les plus consultés par période.',
   },
 ];
 
@@ -37,325 +33,305 @@ const goToDashboard = () => {
 </script>
 
 <template>
-  <div class="solola-home">
-    <div class="solola-home__glow solola-home__glow--1" />
-    <div class="solola-home__glow solola-home__glow--2" />
-
-    <header class="solola-home__header">
-      <div class="solola-home__brand">
-        <div class="solola-home__badge">
-          <Icon icon="solar:bolt-bold" width="14" />
-          YouthSprint
-        </div>
-        <span class="solola-home__brand-name">Solola Admin</span>
+  <div class="home">
+    <header class="home__header">
+      <div class="home__brand">
+        <span class="home__org">Ipas</span>
+        <span class="home__sep" aria-hidden="true">/</span>
+        <span class="home__product">Solola na nga Admin</span>
       </div>
-      <v-btn variant="outlined" color="white" class="solola-home__header-btn" @click="goToLogin">
-        Connexion
-      </v-btn>
+      <button type="button" class="home__link" @click="goToLogin">Connexion</button>
     </header>
 
-    <main class="solola-home__main">
-      <section class="solola-home__hero">
-        <div class="solola-home__hero-content">
+    <main class="home__main">
+      <section class="home__hero">
+        <div class="home__hero-text">
+          <p class="home__eyebrow">Tableau de bord · accès réservé</p>
           <h1>
-            Le système d'administration
-            <span>Solola Admin</span>
+            Suivi et analyse du chatbot
+            <em>Solola na nga</em>
           </h1>
-          <p>
-            Plateforme d'analyse pour le chatbot Solola. Visualisez l'engagement des jeunes,
-            identifiez les thèmes les plus consultés et pilotez votre impact avec des données claires.
+          <p class="home__lead">
+            Interface d'administration pour les équipes Ipas. Consultez l'activité des
+            utilisateurs, les thèmes de conversation et l'évolution de l'audience sur la
+            plateforme Solola na nga.
           </p>
-          <div class="solola-home__actions">
-            <v-btn size="x-large" class="solola-home__cta" @click="goToLogin">
-              <Icon icon="solar:login-3-bold" width="20" class="mr-2" />
+          <div class="home__actions">
+            <button type="button" class="home__btn home__btn--primary" @click="goToLogin">
               Se connecter
-            </v-btn>
-            <v-btn size="x-large" variant="outlined" class="solola-home__cta-secondary" @click="goToDashboard">
-              Voir le dashboard
-            </v-btn>
+            </button>
+            <button type="button" class="home__btn home__btn--secondary" @click="goToDashboard">
+              Ouvrir le dashboard
+            </button>
           </div>
         </div>
 
-        <div class="solola-home__hero-visual">
-          <img
-            src="@/assets/images/backgrounds/login-bg.svg"
-            alt="Illustration Solola Admin"
-            class="solola-home__illustration"
-          />
-        </div>
+        <aside class="home__panel" aria-label="Aperçu des indicateurs">
+          <p class="home__panel-title">Ce que vous pouvez suivre</p>
+          <ul class="home__panel-list">
+            <li v-for="item in highlights" :key="item.title">
+              <strong>{{ item.title }}</strong>
+              <span>{{ item.desc }}</span>
+            </li>
+          </ul>
+        </aside>
       </section>
 
-      <section class="solola-home__features">
-        <v-row>
-          <v-col v-for="feature in features" :key="feature.title" cols="12" md="4">
-            <v-card class="feature-card" elevation="0">
-              <div class="feature-card__icon">
-                <Icon :icon="feature.icon" width="28" />
-              </div>
-              <h3>{{ feature.title }}</h3>
-              <p>{{ feature.desc }}</p>
-            </v-card>
-          </v-col>
-        </v-row>
-      </section>
-
-      <section class="solola-home__about">
-        <v-card class="about-card" elevation="0">
-          <h2>À propos de Solola Admin</h2>
-          <p>
-            <strong>Solola Admin</strong> est l'interface d'administration développée par
-            <strong>YouthSprint</strong> pour accompagner la plateforme conversationnelle Solola.
-            Elle permet aux équipes de suivre les indicateurs clés : nombre d'utilisateurs,
-            répartition par genre, thèmes de santé et droits consultés, et évolution de l'audience
-            au fil du temps.
-          </p>
-          <v-btn color="teal-darken-1" variant="flat" size="large" @click="goToLogin">
-            Accéder à l'espace admin
-          </v-btn>
-        </v-card>
+      <section class="home__info">
+        <h2>À propos</h2>
+        <p>
+          <strong>Solola na nga Admin</strong> est l'outil de pilotage développé par
+          <strong>Ipas</strong> pour accompagner le chatbot Solola na nga. Il centralise
+          les statistiques d'usage : nombre d'utilisateurs, répartition par genre, thèmes
+          consultés et croissance de l'audience dans le temps.
+        </p>
       </section>
     </main>
 
-    <footer class="solola-home__footer">
-      © {{ new Date().getFullYear() }} YouthSprint · Solola Admin
+    <footer class="home__footer">
+      © {{ new Date().getFullYear() }} Ipas · Solola na nga Admin
     </footer>
   </div>
 </template>
 
 <style scoped>
-.solola-home {
-  --teal-dark: #0f766e;
-  --teal-mid: #14b8a6;
+.home {
+  --green: #1a5c4a;
+  --green-soft: #e8f2ef;
+  --ink: #1c1917;
+  --muted: #57534e;
+  --line: #e7e5e4;
+  --bg: #fafaf9;
+
   min-height: 100vh;
-  background: linear-gradient(165deg, #042f2e 0%, #0f766e 35%, #134e4a 70%, #0f172a 100%);
-  color: #fff;
-  position: relative;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
 }
 
-.solola-home__glow {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(100px);
-  pointer-events: none;
-}
-
-.solola-home__glow--1 {
-  width: 500px;
-  height: 500px;
-  top: -150px;
-  right: -100px;
-  background: rgba(45, 212, 191, 0.25);
-}
-
-.solola-home__glow--2 {
-  width: 400px;
-  height: 400px;
-  bottom: 10%;
-  left: -100px;
-  background: rgba(56, 189, 248, 0.12);
-}
-
-.solola-home__header {
-  position: relative;
-  z-index: 2;
+.home__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5rem 2.5rem;
+  padding: 1.25rem 2rem;
+  border-bottom: 1px solid var(--line);
+  background: #fff;
 }
 
-.solola-home__brand {
+.home__brand {
   display: flex;
-  align-items: center;
-  gap: 1rem;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
-.solola-home__badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 12px;
-  border-radius: 999px;
-  font-size: 0.7rem;
+.home__org {
+  font-size: 0.8rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--green);
 }
 
-.solola-home__brand-name {
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
+.home__sep {
+  color: #d6d3d1;
 }
 
-.solola-home__header-btn {
-  border-color: rgba(255, 255, 255, 0.35) !important;
+.home__product {
+  font-size: 1rem;
+  font-weight: 600;
 }
 
-.solola-home__main {
-  position: relative;
-  z-index: 2;
-  max-width: 1200px;
+.home__link {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.home__link:hover {
+  border-color: var(--green);
+  background: var(--green-soft);
+}
+
+.home__main {
+  flex: 1;
+  width: 100%;
+  max-width: 1080px;
   margin: 0 auto;
-  padding: 2rem 2.5rem 4rem;
+  padding: 3rem 2rem 4rem;
 }
 
-.solola-home__hero {
+.home__hero {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.2fr 1fr;
   gap: 3rem;
-  align-items: center;
-  min-height: 55vh;
-  padding: 2rem 0 4rem;
+  align-items: start;
+  margin-bottom: 3.5rem;
 }
 
-.solola-home__hero h1 {
-  font-size: clamp(2rem, 4.5vw, 3.25rem);
-  font-weight: 800;
-  line-height: 1.15;
-  letter-spacing: -0.03em;
+.home__eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.home__hero h1 {
+  font-size: clamp(1.85rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.25;
   margin-bottom: 1.25rem;
+  letter-spacing: -0.02em;
 }
 
-.solola-home__hero h1 span {
+.home__hero h1 em {
   display: block;
-  background: linear-gradient(90deg, #5eead4, #99f6e4);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-style: normal;
+  color: var(--green);
+  margin-top: 0.25rem;
 }
 
-.solola-home__hero > .solola-home__hero-content > p {
-  font-size: 1.1rem;
+.home__lead {
+  font-size: 1.05rem;
   line-height: 1.7;
-  color: rgba(255, 255, 255, 0.8);
-  max-width: 520px;
+  color: var(--muted);
+  max-width: 34rem;
   margin-bottom: 2rem;
 }
 
-.solola-home__actions {
+.home__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
-.solola-home__cta {
-  background: linear-gradient(135deg, #14b8a6, #2dd4bf) !important;
-  color: #042f2e !important;
+.home__btn {
+  padding: 0.7rem 1.35rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.home__btn--primary {
+  background: var(--green);
+  color: #fff;
+}
+
+.home__btn--primary:hover {
+  background: #144a3c;
+}
+
+.home__btn--secondary {
+  background: #fff;
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.home__btn--secondary:hover {
+  border-color: var(--green);
+  background: var(--green-soft);
+}
+
+.home__panel {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1.5rem 1.75rem;
+}
+
+.home__panel-title {
+  font-size: 0.8rem;
   font-weight: 700;
-  border-radius: 12px !important;
-  text-transform: none;
-  box-shadow: 0 8px 32px rgba(20, 184, 166, 0.35);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--line);
 }
 
-.solola-home__cta-secondary {
-  border-color: rgba(255, 255, 255, 0.4) !important;
-  color: #fff !important;
-  border-radius: 12px !important;
-  text-transform: none;
-}
-
-.solola-home__illustration {
-  width: 100%;
-  max-width: 420px;
-  margin: 0 auto;
-  display: block;
-  filter: drop-shadow(0 24px 48px rgba(0, 0, 0, 0.3));
-}
-
-.solola-home__features {
-  margin-bottom: 3rem;
-}
-
-.feature-card {
-  padding: 1.75rem;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  height: 100%;
-  backdrop-filter: blur(8px);
-}
-
-.feature-card__icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
+.home__panel-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(94, 234, 212, 0.15);
-  color: #5eead4;
-  margin-bottom: 1rem;
+  flex-direction: column;
+  gap: 1.25rem;
 }
 
-.feature-card h3 {
+.home__panel-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.home__panel-list strong {
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.home__panel-list span {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.home__info {
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+
+.home__info h2 {
   font-size: 1.1rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
-.feature-card p {
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.72);
+.home__info p {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--muted);
+  max-width: 42rem;
   margin: 0;
 }
 
-.about-card {
-  padding: 2.5rem;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.95);
-  color: #0f172a;
-  text-align: center;
-}
-
-.about-card h2 {
-  font-size: 1.5rem;
-  font-weight: 800;
-  margin-bottom: 1rem;
-}
-
-.about-card p {
-  max-width: 680px;
-  margin: 0 auto 1.5rem;
-  line-height: 1.7;
-  color: #475569;
-}
-
-.solola-home__footer {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  padding: 1.5rem;
+.home__footer {
+  padding: 1.25rem 2rem;
+  border-top: 1px solid var(--line);
   font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--muted);
+  text-align: center;
+  background: #fff;
 }
 
-@media (max-width: 960px) {
-  .solola-home__hero {
+@media (max-width: 900px) {
+  .home__hero {
     grid-template-columns: 1fr;
-    text-align: center;
-    min-height: auto;
+    gap: 2rem;
   }
 
-  .solola-home__hero > .solola-home__hero-content > p {
-    margin-left: auto;
-    margin-right: auto;
+  .home__header,
+  .home__main,
+  .home__footer {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
   }
 
-  .solola-home__actions {
-    justify-content: center;
-  }
-
-  .solola-home__header {
-    padding: 1rem 1.25rem;
-  }
-
-  .solola-home__main {
-    padding: 1rem 1.25rem 3rem;
+  .home__main {
+    padding-top: 2rem;
   }
 }
 </style>

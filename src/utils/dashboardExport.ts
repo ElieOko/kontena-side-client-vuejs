@@ -30,7 +30,7 @@ export interface DashboardExportData {
 
 export const buildDashboardCsv = (data: DashboardExportData): string => {
   const lines: string[] = [
-    row('Solola Admin - Export statistiques'),
+    row('Solola na nga Admin - Export statistiques'),
     row('Période', data.periodLabel),
     row('Date début', data.dateFrom || '—'),
     row('Date fin', data.dateTo || '—'),

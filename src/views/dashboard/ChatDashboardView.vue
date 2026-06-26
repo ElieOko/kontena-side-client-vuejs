@@ -248,11 +248,11 @@ onMounted(loadAll);
         <div>
           <div class="d-flex align-center ga-3 mb-2">
             <v-chip size="small" color="teal" variant="flat" class="font-weight-bold">
-              YouthSprint
+              Ipas
             </v-chip>
-            <span class="text-caption text-medium-emphasis">Plateforme Solola</span>
+            <span class="text-caption text-medium-emphasis">Plateforme Solola na nga</span>
           </div>
-          <h1 class="text-h4 font-weight-bold mb-1">Solola Admin</h1>
+          <h1 class="text-h4 font-weight-bold mb-1">Solola na nga Admin</h1>
           <p class="text-body-2 text-medium-emphasis mb-0">
             Analyse des conversations et de l'engagement utilisateurs
           </p>

@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import AuthRoutes from './AuthRoutes'
 import { MainRoutes } from './MainRoutes'
 
@@ -9,7 +8,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component:  import('@/views/auth/SololaHomeView.vue')
+      component: () => import('@/views/auth/SololaHomeView.vue'),
     },
     MainRoutes,
     AuthRoutes

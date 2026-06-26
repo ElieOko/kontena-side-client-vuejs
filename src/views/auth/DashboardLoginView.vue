@@ -48,9 +48,9 @@ const submit = async () => {
             <div class="solola-auth__brand-top">
               <div class="solola-auth__badge">
                 <Icon icon="solar:bolt-bold" width="14" />
-                YouthSprint
+                Ipas
               </div>
-              <h1 class="solola-auth__title">Solola Admin</h1>
+              <h1 class="solola-auth__title">Solola na nga Admin</h1>
               <p class="solola-auth__subtitle">
                 Pilotez l'engagement de votre plateforme conversationnelle avec clarté et précision.
               </p>
@@ -80,9 +80,9 @@ const submit = async () => {
             <div class="solola-auth__mobile-brand d-lg-none">
               <div class="solola-auth__badge solola-auth__badge--light">
                 <Icon icon="solar:bolt-bold" width="14" />
-                YouthSprint
+                Ipas
               </div>
-              <h2 class="solola-auth__mobile-title">Solola Admin</h2>
+              <h2 class="solola-auth__mobile-title">Solola na nga Admin</h2>
             </div>
 
             <v-card class="solola-auth__card" elevation="0">
@@ -171,7 +171,7 @@ const submit = async () => {
             </v-card>
 
             <p class="solola-auth__footer">
-              © {{ new Date().getFullYear() }} YouthSprint · Solola Admin
+              © {{ new Date().getFullYear() }} Ipas · Solola na nga Admin
             </p>
           </div>
         </v-col>
