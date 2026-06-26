@@ -15,5 +15,5 @@ CREATE TABLE IF NOT EXISTS dashboard_users (
 );
 
 INSERT INTO dashboard_roles (name)
-VALUES ('admin'), ('viewer')
+VALUES ('superadmin'), ('admin'), ('viewer')
 ON CONFLICT (name) DO NOTHING;

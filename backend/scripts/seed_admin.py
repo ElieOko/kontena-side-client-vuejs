@@ -16,6 +16,12 @@ def seed() -> None:
     Base.metadata.create_all(bind=engine)
     db: Session = SessionLocal()
     try:
+        superadmin_role = db.query(Role).filter(Role.name == "superadmin").first()
+        if not superadmin_role:
+            superadmin_role = Role(name="superadmin")
+            db.add(superadmin_role)
+            db.flush()
+
         admin_role = db.query(Role).filter(Role.name == "admin").first()
         if not admin_role:
             admin_role = Role(name="admin")
@@ -33,13 +39,15 @@ def seed() -> None:
                     username="admin",
                     email="admin@kontena.local",
                     hashed_password=hash_password("admin123"),
-                    role_id=admin_role.id,
+                    role_id=superadmin_role.id,
                     is_active=True,
                 )
             )
+        elif admin_user.role.name == "admin":
+            admin_user.role_id = superadmin_role.id
 
         db.commit()
-        print("Tables dashboard initialisées. Compte admin: admin / admin123")
+        print("Tables dashboard initialisées. Compte superadmin: admin / admin123")
     finally:
         db.close()
 
